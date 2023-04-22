@@ -24,14 +24,19 @@ function Cards() {
   );
 
   const [prev, setPrev] = useState(-1);
-  var count = 0;
+  const [count, setCount] = useState(0);
+  const [score, setScore] = useState(0);
+
   function check(curr) {
-    if (items[curr].id == items[prev].id) {
+    if (items[curr].id === items[prev].id) {
       items[curr].stat = "correct";
       items[prev].stat = "correct";
+      setCount(count + 1);
+      setScore(score + 100);
       setItems([...items]);
       setPrev(-1);
     } else {
+      setCount(count + 1);
       items[curr].stat = "wrong";
       items[prev].stat = "wrong";
       setItems([...items]);
@@ -60,8 +65,10 @@ function Cards() {
       {items.map((items, index) => (
         <Card key={index} item={items} id={index} handleClick={handleClick} />
       ))}
+      <div>Count :{count}</div>
+      <div>Score :{score}</div>
+      <div>Accuracy:{((13 / count) * 100).toFixed(1)}</div>
     </div>
   );
 }
-
 export default Cards;
